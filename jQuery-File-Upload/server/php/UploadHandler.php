@@ -10,9 +10,13 @@
  * http://www.opensource.org/licenses/MIT
  */
 
+include_once 'UploadProcess.php';
+
 class UploadHandler
 {
 
+	private  $uploadPro;
+	
     protected $options;
 
     // PHP File Upload error message codes:
@@ -41,6 +45,8 @@ class UploadHandler
     protected $image_objects = array();
 
     function __construct($options = null, $initialize = true, $error_messages = null) {
+    	$this->uploadPro = new UploadProcess();
+    	
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
@@ -160,7 +166,7 @@ class UploadHandler
         }
     }
 
-    protected function initialize() {
+    protected function initialize() {    	
         switch ($this->get_server_var('REQUEST_METHOD')) {
             case 'OPTIONS':
             case 'HEAD':
@@ -1065,6 +1071,7 @@ class UploadHandler
                     $append_file ? FILE_APPEND : 0
                 );
             }
+            $file->filePath=$file_path;
             $file_size = $this->get_file_size($file_path, $append_file);
             if ($file_size === $file->size) {
                 $file->url = $this->get_download_url($file->name);
@@ -1254,8 +1261,17 @@ class UploadHandler
                 $this->get_singular_param_name() => $this->get_file_object($file_name)
             );
         } else {
+        	/*        	
             $response = array(
                 $this->options['param_name'] => $this->get_file_objects()
+            );*/
+        	$board = isset($_GET['board'])?$_GET['board']:"";
+        	$branch = isset($_GET['git_branch'])?$_GET['git_branch']:"";
+        	$isMasterFill = isset($_GET['master_fill_flag'])?$_GET['master_fill_flag']:"";
+        	settype($isMasterFill, "boolean");        	
+            $response = array(
+            //$this->options['param_name'] => $this->get_file_objects()
+            	$this->options['param_name'] => array_merge($this->get_file_objects(),$this->uploadPro->getData($board,$branch,$isMasterFill)),
             );
         }
         return $this->generate_response($response, $print_response);
@@ -1284,6 +1300,11 @@ class UploadHandler
             // param_name is an array identifier like "files[]",
             // $_FILES is a multi-dimensional array:
             foreach ($upload['tmp_name'] as $index => $value) {
+            	$a_file_name =$file_name ? $file_name : $upload['name'][$index];
+            	if (!$this->uploadPro->isNeedUpload($a_file_name)){
+            		continue;
+            	}
+            	
                 $files[] = $this->handle_file_upload(
                     $upload['tmp_name'][$index],
                     $file_name ? $file_name : $upload['name'][$index],
@@ -1293,6 +1314,7 @@ class UploadHandler
                     $index,
                     $content_range
                 );
+                $this->uploadPro->processTarGzFile($files[0]->filePath);
             }
         } else {
             // param_name is a single object identifier like "file",
@@ -1310,6 +1332,11 @@ class UploadHandler
                 $content_range
             );
         }
+        
+        /*return $this->generate_response(
+            array($this->options['param_name'] => $files),
+            $print_response
+        );*/        
         return $this->generate_response(
             array($this->options['param_name'] => $files),
             $print_response

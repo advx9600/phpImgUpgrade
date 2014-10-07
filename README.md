@@ -1,3 +1,0 @@
-phpImgUpgrade
-=============
-for img download

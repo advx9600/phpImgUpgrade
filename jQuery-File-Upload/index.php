@@ -1,10 +1,10 @@
 <?php
-include_once '../class.MySQL.php';
+/*include_once '../class.MySQL.php';
 $db = new MySQL("db_img_update","root","");
 $action = "";
 if (count($_GET) > 0){
 	$action = $_GET['action'];
-}
+}*/
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -55,6 +55,7 @@ if (count($_GET) > 0){
 		<tr>
 		<td width= "40"></td>
 		<?php
+		/*
 		$db->select("tb_img_type");
 		$len = $db->records;
 		$result = $db->arrayedResult;
@@ -77,13 +78,15 @@ if (count($_GET) > 0){
 			}
 
 			echo "</table></td>";
-		}
+		}*/
 
 		?>
 		</tr>
 	</table>
-	<br/><br/><br/><br/>
 	
+	<table>
+	<tr><td><font size="20"> after upload need fresh page</font></td></tr>
+	</table>
 	<!-- The file upload form used as target for the file upload widget -->
 	<form id="fileupload" action="server/php/files"
 		method="POST" enctype="multipart/form-data">
@@ -99,7 +102,7 @@ if (count($_GET) > 0){
 				<span class="btn btn-success fileinput-button"> <i
 					class="glyphicon glyphicon-plus"></i> <span>Add files...</span> <input
 					type="file" name="files[]" multiple> </span>
-				<button type="submit" class="btn btn-primary start">
+				<button type="submit" class="btn btn-primary start" >
 					<i class="glyphicon glyphicon-upload"></i> <span>Start upload</span>
 				</button>
 				<button type="reset" class="btn btn-warning cancel">
@@ -207,23 +210,23 @@ if (count($_GET) > 0){
 {% } %}
 </script>
 	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		src="other_js_css/jquery.min.js"></script>
 	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 	<script src="js/vendor/jquery.ui.widget.js"></script>
 	<!-- The Templates plugin is included to render the upload/download listings -->
-	<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+	<script src="other_js_css/tmpl.min.js"></script>
 	<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
 	<script
-		src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+		src="other_js_css/load-image.all.min.js"></script>
 	<!-- The Canvas to Blob plugin is included for image resizing functionality -->
 	<script
-		src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+		src="other_js_css/canvas-to-blob.min.js"></script>
 	<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
 	<script
-		src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		src="other_js_css/bootstrap.min.js"></script>
 	<!-- blueimp Gallery script -->
 	<script
-		src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+		src="other_js_css/jquery.blueimp-gallery.min.js"></script>
 	<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 	<script src="js/jquery.iframe-transport.js"></script>
 	<!-- The basic File Upload plugin -->

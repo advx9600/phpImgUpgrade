@@ -545,9 +545,9 @@
                 node[0].offsetWidth;
         },
 
-        _transition: function (node) {
-            var dfd = $.Deferred();
-            if ($.support.transition && node.hasClass('fade') && node.is(':visible')) {
+        _transition: function (node) {        	
+            var dfd = $.Deferred();            
+            if ($.support.transition && node.hasClass('fade') && node.is(':visible')) {            	
                 node.bind(
                     $.support.transition.end,
                     function (e) {
@@ -558,10 +558,10 @@
                             dfd.resolveWith(node);
                         }
                     }
-                ).toggleClass('in');
-            } else {
+                ).toggleClass('in');                
+            } else {            	
                 node.toggleClass('in');
-                dfd.resolveWith(node);
+                dfd.resolveWith(node);                
             }
             return dfd;
         },
