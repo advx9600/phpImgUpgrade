@@ -53,6 +53,7 @@ class MySQL {
 		if (!$this->Connect()){
 			echo $this->lastError;
 		}
+		mysqli_query($this->databaseLink,"SET NAMES 'UTF8'");
 	}
 
 

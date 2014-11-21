@@ -19,7 +19,7 @@ class UtilA{
 		$this->r1 = $r1;
 		$this->r2 = $r2;
 	}
-	private function path2url($file_path, $Protocol='http://') {
+	public function path2url($file_path, $Protocol='http://') {
 		$file_path=str_replace('\\','/',$file_path);
 		$file_path="/pro/".str_replace(dirname($_SERVER['DOCUMENT_ROOT']),'',$file_path);
 		$file_path='http://'.$_SERVER['HTTP_HOST'].$file_path;
